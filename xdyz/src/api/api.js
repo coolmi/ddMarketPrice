@@ -284,5 +284,29 @@ export default {
       }).catch((error) => {
       return Promise.reject(error)
     })
+  },
+  /**
+   * 出栏鸡场汇总报表
+   * @param cb
+   */
+  findOrderInfo: function (params, cb) {
+    axios.post('/breed/api/v1/breedproduct/findOrderInfo', params)
+      .then((res) => {
+        cb(res)
+      }).catch((error) => {
+      return Promise.reject(error)
+    })
+  },
+  /**
+   * 出栏鸡场汇总报表
+   * @param cb
+   */
+  saveModDailyEliInfoRecord: function (params, cb) {
+    axios.post('/breed/api/v1/breedproduct/saveModDailyEliInfoRecord', params)
+      .then((res) => {
+        cb(res)
+      }).catch((error) => {
+      return Promise.reject(error)
+    })
   }
 }

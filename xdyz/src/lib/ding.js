@@ -159,9 +159,8 @@ export function showPreloader(mes = '加载中', showIcon = true) {
   })
 }
 
-export function showToast(mes = '成功', icon = 'success') {
+export function showToast(mes) {
   dd.device.notification.toast({
-    icon: icon,
     text: mes,
     duration: 3,
     onSuccess: function(result) {
@@ -174,6 +173,11 @@ export function hidePreloader() {
   dd.device.notification.hidePreloader()
 }
 
+export function setLeft(config = {}) {
+  dd.ready(function () {
+    dd.biz.navigation.setLeft(config)
+  });
+}
 export default {
   CORPID,
   RIGHT_TOP_TITLE,
@@ -189,5 +193,6 @@ export default {
   showPreloader,
   hidePreloader,
   showToast,
-  getJSApiList
+  getJSApiList,
+  setLeft
 }

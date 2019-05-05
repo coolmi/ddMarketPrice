@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './index'
-// import ding from './lib/ding'
+import ding from './lib/ding'
 import 'element-ui/lib/theme-chalk/index.css';
 import { Table, TableColumn } from 'element-ui';
 import echarts from 'echarts'
@@ -19,6 +19,11 @@ import TabItem from 'vux/src/components/tab/tab-item.vue'
 import Group from 'vux/src/components/group/index.vue'
 import InlineLoading from 'vux/src/components/inline-loading/index.vue'
 import Calendar from 'vux/src/components/calendar/index.vue'
+import Swiper from 'vux/src/components/swiper/swiper.vue'
+import SwiperItem from 'vux/src/components/swiper/swiper-item.vue'
+import Cell from 'vux/src/components/cell/index.vue'
+import XInput from 'vux/src/components/x-input/index.vue'
+import XTextarea from 'vux/src/components/x-textarea/index.vue'
 Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false
 Vue.component('popup', Popup);
@@ -34,23 +39,28 @@ Vue.component('tab-item', TabItem);
 Vue.component('group', Group);
 Vue.component('InlineLoading', InlineLoading);
 Vue.component('calendar', Calendar);
+Vue.component('swiper', Swiper);
+Vue.component('swiper-item', SwiperItem);
+Vue.component('cell', Cell);
+Vue.component('x-input', XInput);
+Vue.component('x-textarea', XTextarea);
 Vue.component(Table.name, Table);
 Vue.component(TableColumn.name, TableColumn);
-initVue()
-// ding.ddLogin(location.href).then(data => {
-//   initVue()
-// }).catch((err) => {
-//   let dd = window.dd
-//   dd.device.notification.alert({
-//     message: err.msg.errorMessage || err.msg,
-//     title: '提示',
-//     buttonName: '确定',
-//     onSuccess: function() {
-//       // dd.biz.navigation.close()
-//     },
-//     onFail: function(err) {}
-//   });
-// })
+// initVue()
+ding.ddLogin(location.href).then(data => {
+  initVue()
+}).catch((err) => {
+  let dd = window.dd
+  dd.device.notification.alert({
+    message: err.msg.errorMessage || err.msg,
+    title: '提示',
+    buttonName: '确定',
+    onSuccess: function() {
+      // dd.biz.navigation.close()
+    },
+    onFail: function(err) {}
+  });
+})
 function initVue() {
   new Vue({
     router,

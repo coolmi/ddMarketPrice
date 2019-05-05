@@ -85,6 +85,7 @@
 
 <script>
   import api from '../api/api'
+  import ding from './../lib/ding'
   export default {
     data() {
       return {
@@ -103,10 +104,9 @@
         piciId: '',
         farmslist: [],
         picilist: [],
-        bartons: []
+        bartons: [],
+        flag: ''
       }
-    },
-    mounted() {
     },
     watch: {
       demo1 () {
@@ -155,6 +155,7 @@
       }
     },
     created() {
+      this.flag = this.$route.query.flag
       this.getFarms();
     },
     methods: {
@@ -201,12 +202,12 @@
           farmId: this.changId || ''
         }
         if (params.farmId === '') {
-          alert('请选择鸡场!')
+          ding.showToast('请选择鸡场!')
           return;
         }
         if (val === 1) {
           if (params.farmId.indexOf(',') >= 0) {
-            alert('鸡场数量大于1，鸡舍不允许选，请选择批次！')
+            ding.showToast('鸡场数量大于1，鸡舍不允许选，请选择批次!')
             return;
           }
           api.getBartonByMoreFarm(params, function (res) {
@@ -222,7 +223,7 @@
             console.log(res);
             if (res.data.code) {
               if (!res.data.data) {
-                alert('该场下暂无批次!')
+                ding.showToast('该场下暂无批次!')
               } else {
                 _that.picilist = res.data.data
                 _that.showpc = !_that.showpc
@@ -234,20 +235,20 @@
       // 生成报表
       makeReport () {
         let params = {
-          flag: '2',
+          flag: this.flag,
           werks: this.changId,
           barto: this.sheId,
           batch: this.piciId
         }
         if (this.changId === '') {
-          alert('场不能为空！')
+          ding.showToast('场不能为空!')
           return;
         }
         if (this.piciId === '') {
-          alert('批次不能为空！')
+          ding.showToast('批次不能为空!')
           return;
         }
-        this.$router.push({ path: '/makeReportManage', query: params })
+        this.$router.push({ path: '/makeReportManage', query: { params: params } })
       }
     }
   }

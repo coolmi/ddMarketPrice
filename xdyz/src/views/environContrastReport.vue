@@ -9,7 +9,7 @@
 
 <script>
   import api from '../api/api'
-  // import baseConfig from '../api/baseConfig'
+  import ding from './../lib/ding'
   let echarts = require('echarts/lib/echarts')
   require('echarts/lib/chart/bar')
   require('echarts/lib/chart/line')
@@ -79,7 +79,7 @@
         api.getAc2000Info(params, function (res) {
           console.log(res)
           if (!res.data.code) {
-            alert(res.data.message)
+            ding.showToast(res.data.message)
             setTimeout(function () {
               _that.$router.go(-1)
             }, 1000)

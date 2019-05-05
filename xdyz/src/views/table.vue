@@ -8,7 +8,6 @@
     <div class="left-menu" v-show="showContent">
       <div class="table-item">
         <table border="0" class="table-left">
-
           <tr style="background-color: #fbffe7;">
             <td align="center">
               <div>{{leftmenu.bartno}}</div>
@@ -204,6 +203,7 @@
         </table>
       </div>
     </div>
+    <img src="../../static/hkwarn/searchitem.png" class="flex_img" @click="hideCheck">
     <div v-show="showrl" style="background-color: #ffffff;">
       <div  style="padding:10px;">
         <popup v-model="showrl" class="checker-popup">
@@ -223,7 +223,6 @@
         </popup>
       </div>
     </div>
-    <img v-show="!showInfos" src="../../static/hkwarn/searchitem.png" class="flex_img" @click="hideCheck">
   </div>
 </template>
 
@@ -304,10 +303,6 @@
             // _that.showTips = false
             _that.showContent = false
             _that.showInfos = true
-            _that.countDown();
-            setTimeout(() => {
-              _that.checkBarton('');
-            }, 2000)
           }
           _that.leftmenu.bartno = res.data.data.werks
         })
@@ -324,19 +319,6 @@
             _that.farmslist = res.data.data.farms
           }
         })
-      },
-      // 计时返回
-      countDown () {
-        this.warntext = this.totalTime + 's后返回'
-        let clock = window.setInterval(() => {
-          this.totalTime--
-          this.warntext = this.totalTime + 's后返回'
-          if (this.totalTime <= 0) {
-            window.clearInterval(clock)
-            this.warntext = ''
-            this.totalTime = 3
-          }
-        }, 1000)
       }
     }
   }

@@ -49,7 +49,7 @@
       </div>
     </div>
     <div class="wcontent">
-      <p style="border-bottom: 1px solid #e5e5e5!important;font-size: 12px;padding-left: 10px; height: 5vh;line-height: 5vh;font-weight: bold;">24小时天气预报</p>
+      <p style="border-bottom: 1px solid #e5e5e5!important;font-size: 12px;height: 5vh;line-height: 5vh;font-weight: bold;">24小时天气预报</p>
       <div style="overflow: auto;">
         <ul class="wbox">
           <li v-for="(item, index) in condition24" :key="index">
@@ -67,7 +67,7 @@
       </div>
     </div>
     <div class="wfooter">
-      <p style="border-bottom: 1px solid #e5e5e5!important;font-size: 12px;padding-left: 10px; height: 5vh;line-height: 5vh;">一周天气预报</p>
+      <p style="border-bottom: 1px solid #e5e5e5!important;font-size: 12px;height: 5vh;line-height: 5vh;font-weight: bold">一周天气预报</p>
       <div class="weatherbox">
         <ul>
           <li v-for="(val,index) in condition15" :key="index" style="display: flex;justify-content: space-between;align-items: center;">

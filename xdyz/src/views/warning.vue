@@ -60,7 +60,7 @@
 
 <script>
   import api from '../api/api'
-
+  import ding from './../lib/ding'
   export default {
     data() {
       return {
@@ -162,7 +162,7 @@
       },
       // 环控提示信息
       getaltInfo(info) {
-        alert(info)
+        ding.showToast(info)
       },
       // 确认环控信息
       srueInfo(id) {
@@ -173,7 +173,7 @@
         api.confirmMyAc2000AlertInfo(params, function (res) {
           console.log(res);
           if (res.data.code) {
-            alert(res.data.message)
+            ding.showToast(res.data.message)
           }
         })
         this.huanwarning();
@@ -209,20 +209,17 @@
     border-bottom: 1px solid #e5e5e5;
     min-height: 50px;
   }
-
   .li_content {
     display: flex;
     flex-direction: column;
     margin-left: 15px;
   }
-
   .li_title {
     font-size: 15px;
     color: black;
     font-weight: bold;
     margin-left: -85px
   }
-
   .btn_info {
     background-color: #BBBBBB;
     width: 12%;

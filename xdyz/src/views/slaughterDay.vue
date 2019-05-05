@@ -8,72 +8,86 @@
       style="width: 100%;">
       <el-table-column
         fixed
+        align="center"
         prop="werks"
         label="鸡场"
         width="120">
       </el-table-column>
       <el-table-column
         fixed
+        align="center"
         prop="barton"
         label="鸡舍"
         width="50">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="outTime"
         label="出栏日期"
         width="100">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="inTime"
         label="进鸡日期"
         width="100">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="inTotal"
         label="进鸡只数"
         width="80">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="daage"
         label="日龄"
         width="50">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="jkzzl"
         label="九块重量"
         width="80">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="jkzhishu"
         label="九块只数"
         width="80">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="mjzzl"
         label="大鸡重量"
         width="80">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="mjzhishu"
         label="大鸡只数"
         width="80">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="sjzzl"
         label="死鸡重量"
         width="80">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="sjzhishu"
         label="死鸡只数"
         width="80">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="mjrate"
         label="单只重量"
         width="80">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="chrate"
         label="成活率"
         width="80">

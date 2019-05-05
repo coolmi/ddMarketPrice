@@ -85,6 +85,7 @@
 
 <script>
   import api from '../api/api'
+  import ding from './../lib/ding'
   export default {
     data() {
       return {
@@ -105,8 +106,6 @@
         zb: [],
         bartons: []
       }
-    },
-    mounted() {
     },
     watch: {
       demo1 () {
@@ -202,7 +201,7 @@
           farmId: this.changId
         }
         if (params.farmId === '') {
-          alert('请选择鸡场!')
+          ding.showToast('请选择鸡场!')
           return;
         }
         api.getBartonByMoreFarm(params, function (res) {
@@ -221,11 +220,11 @@
           zb: this.zhibId
         }
         if (this.changId === '') {
-          alert('场不能为空！')
+          ding.showToast('场不能为空!')
           return;
         }
         if (this.zhibId === '') {
-          alert('指标不能为空！')
+          ding.showToast('指标不能为空!')
           return;
         }
         this.$router.push({ path: '/environContrastReport', query: params })

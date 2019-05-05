@@ -8,97 +8,67 @@
       style="width: 100%;">
       <el-table-column
         fixed
+        align="center"
         prop="werksName"
         label="鸡场"
         width="100">
       </el-table-column>
       <el-table-column
         fixed
+        align="center"
         prop="inTime"
         label="入雏"
         width="70">
       </el-table-column>
       <el-table-column
         fixed
+        align="center"
         prop="allRate"
         label="累计"
         width="70">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="week1"
         label="一周"
         width="70">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="week2"
         label="二周"
         width="70">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="week3"
         label="三周"
         width="70">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="week4"
         label="四周"
         width="70">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="week5"
         label="五周"
         width="70">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="week6"
         label="六周"
         width="70">
       </el-table-column>
       <el-table-column
-        v-for="i in 45"
-        :label="i"
+        v-for="i in 45" :key="i"
+        :prop="'daage' + i"
+        :label="i + ''"
         width="80">
       </el-table-column>
-      <!--<el-table-column-->
-        <!--prop="mjzhishu"-->
-        <!--label="1"-->
-        <!--width="80">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column-->
-        <!--prop="sjzzl"-->
-        <!--label="2"-->
-        <!--width="80">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column-->
-        <!--prop="sjzhishu"-->
-        <!--label="3"-->
-        <!--width="80">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column-->
-        <!--prop="sjzzl"-->
-        <!--label="4"-->
-        <!--width="80">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column-->
-        <!--prop="sjzzl"-->
-        <!--label="2"-->
-        <!--width="80">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column-->
-        <!--prop="sjzzl"-->
-        <!--label="2"-->
-        <!--width="80">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column-->
-        <!--prop="sjzzl"-->
-        <!--label="2"-->
-        <!--width="80">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column-->
-        <!--prop="sjzzl"-->
-        <!--label="2"-->
-        <!--width="80">-->
-      <!--</el-table-column>-->
     </el-table>
     <div v-show="showrl" style="background-color: #ffffff;">
       <div  style="padding:10px;">
@@ -119,7 +89,7 @@
 
 <script>
   import api from '../api/api'
-
+  import ding from './../lib/ding'
   export default {
     data() {
       return {
@@ -131,14 +101,20 @@
       }
     },
     created() {
-      // let date = new Date();
-      // let year = date.getFullYear()
-      // let month = date.getMonth() + 1
-      // let day = date.getDate()
-      // console.log(date);
+      let now = new Date();
+      let yy = now.getFullYear(); // 年
+      let mm = now.getMonth() + 1; // 月
+      let dd = now.getDate();
+      let clock = yy + '-';
+      if (mm < 10) clock += '0';
+      clock += mm + '-';
+      if (dd < 10) clock += '0';
+      clock += dd;
+      this.starttime = clock;
+      this.endtime = clock;
       let params = {
-        begda: '2019-03-01',
-        endda: '2019-03-02'
+        begda: '',
+        endda: ''
       }
       this.iniliata(params);
     },
@@ -148,7 +124,22 @@
         api.getSTHZ(params, function (res) {
           console.log(res);
           if (res.data.code) {
-            _that.dataResult = res.data.data.dataResult
+            if (res.data.data.dataResult.length > 0) {
+              _that.dataResult = res.data.data.dataResult
+            } else {
+              ding.showToast('暂无数据!')
+            }
+          }
+          if (!res.data.code) {
+            ding.showToast(res.data.message)
+            // let dd = window.dd
+            // setTimeout(function () {
+            //   dd.biz.navigation.close({
+            //     onSuccess: function(result) {
+            //     },
+            //     onFail: function(err) {}
+            //   })
+            // }, 1000)
           }
         })
       },
@@ -156,8 +147,21 @@
         this.showrl = !this.showrl
       },
       hideCheckInfo () {
+        let sdate = this.starttime.replace(/-/g, '/');
+        let stimestamp = new Date(sdate).getTime();
+        let edate = this.endtime.replace(/-/g, '/');
+        let etimestamp = new Date(edate).getTime();
+        if (stimestamp > etimestamp) {
+          ding.showToast('开始时间不能大于结束时间!')
+          return;
+        }
+        if (etimestamp < stimestamp) {
+          ding.showToast('结束时间不能大于开始时间!')
+          return;
+        }
         let params = {
-          mydate: this.seltime
+          begda: this.starttime,
+          endda: this.endtime
         }
         this.iniliata(params);
         this.showrl = !this.showrl

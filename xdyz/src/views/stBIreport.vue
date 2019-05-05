@@ -1,24 +1,27 @@
 <template>
   <div>
-    <div>
-      <ul style="display: flex;flex-direction: row;background-color: aqua;position: fixed;width: 98%;top: 0;">
+    <div style="background-color: #e5e5e5;height: 100vh;line-height: 50vh" v-show="show_loading">
+      <inline-loading></inline-loading><span style="margin-left: 10px">{{jiazai}}</span>
+    </div>
+    <div v-show="!show_loading">
+      <ul style="display: flex;flex-direction: row;background-color: #BFEFFF;position: fixed;width: 98%;top: 0;">
         <li style="width: 10%"><div class="li_common">鸡场</div></li>
         <li style="width: 7%"><div class="li_common">日龄</div></li>
         <li style="width: 7%"><div class="li_common">鸡舍</div></li>
         <li style="width: 21%">
           <div class="li_common_span">死淘情况</div>
           <div class="li_common_span_min">
-            <div class="span_li"><p class="p_li">0422</p><p class="p_li">{{'(' + allst1 + ')'}}</p></div>
-            <div class="span_li"><p class="p_li">0423</p><p class="p_li">{{'(' + allst2 + ')'}}</p></div>
+            <div class="span_li"><p class="p_li">{{dateobj.date1}}</p><p class="p_li">{{'(' + allst1 + ')'}}</p></div>
+            <div class="span_li"><p class="p_li">{{dateobj.date2}}</p><p class="p_li">{{'(' + allst2 + ')'}}</p></div>
             <div class="span_li"><p class="p_li">差额</p><p class="p_li">{{diffallst}}</p></div>
           </div>
         </li>
         <li style="width: 42%">
           <div class="li_common_span">采食对比</div>
           <div class="li_common_span_min">
-            <span class="span_li_sceond" style="width: 15%">0420</span>
-            <span class="span_li_sceond" style="width: 15%">0421</span>
-            <span class="span_li_sceond" style="width: 15%">0422</span>
+            <span class="span_li_sceond" style="width: 15%">{{dateobj.date3}}</span>
+            <span class="span_li_sceond" style="width: 15%">{{dateobj.date4}}</span>
+            <span class="span_li_sceond" style="width: 15%">{{dateobj.date5}}</span>
             <span class="span_li_sceond" style="width: 30%">标准耗料</span>
             <span class="span_li_sceond" style="width: 20%;">差额</span>
             <span class="span_li_sceond" style="width: 20%;">日增料</span>
@@ -28,10 +31,9 @@
           <div class="li_common">备注</div>
         </li>
       </ul>
-    </div>
-    <div style="margin-top: 80px">
-      <div v-for="(item, index) in shedata" :key="index" >
-        <div style="display: flex;flex-direction: row;background-color: aqua;width: 100%;overflow-y: auto;" @click="viewbarton(item, index)">
+      <div style="margin-top: 80px">
+        <div v-for="(item, index) in shedata" :key="index" >
+          <div style="display: flex;flex-direction: row;background-color: #BFEFFF;width: 100%;overflow-y: auto;" @click="viewbarton(item, index)">
             <div style="width: 10%"><div class="data_li">{{item.wetxt}}</div></div>
             <div style="width: 7%"><div class="data_li">{{item.werksdaage}}</div></div>
             <div style="width: 7%"><div class="data_li"></div></div>
@@ -55,41 +57,43 @@
             <div style="width: 13%">
               <div class="data_li">{{item.werksbz}}</div>
             </div>
-        </div>
-        <div v-if="item.showshe">
-          <div style="display: flex;flex-direction: row;background-color: #ffff99;width: 100%;overflow-y: auto;" v-for="(it, index) in item.items" :key="index">
-            <div style="width: 10%"><div class="data_li">{{it.werks}}</div></div>
-            <div style="width: 7%"><div class="data_li">{{it.daage}}</div></div>
-            <div style="width: 7%"><div class="data_li">{{it.barton}}</div></div>
-            <div style="width: 21%">
-              <div class="li_common_span_min" style="height: 36px;line-height: 36px">
-                <span class="span_li">{{it.st1}}</span>
-                <span class="span_li">{{it.st2}}</span>
-                <span class="span_li">{{it.stcy}}</span>
+          </div>
+          <div v-if="item.showshe">
+            <div style="display: flex;flex-direction: row;background-color: #CDB5CD;width: 100%;overflow-y: auto;" v-for="(it, index) in item.items" :key="index">
+              <div style="width: 10%"><div class="data_li">{{it.werks}}</div></div>
+              <div style="width: 7%"><div class="data_li">{{it.daage}}</div></div>
+              <div style="width: 7%"><div class="data_li">{{it.barton}}</div></div>
+              <div style="width: 21%">
+                <div class="li_common_span_min" style="height: 36px;line-height: 36px">
+                  <span class="span_li">{{it.st1}}</span>
+                  <span class="span_li">{{it.st2}}</span>
+                  <span class="span_li">{{it.stcy}}</span>
+                </div>
               </div>
-            </div>
-            <div style="width: 42%">
-              <div class="li_common_span_min" style="height: 36px;line-height: 36px">
-                <span class="span_li_sceond" style="width: 15%">{{it.cs1}}</span>
-                <span class="span_li_sceond" style="width: 15%">{{it.cs2}}</span>
-                <span class="span_li_sceond" style="width: 15%">{{it.cs3}}</span>
-                <span class="span_li_sceond" style="width: 30%">{{it.bzhl}}</span>
-                <span class="span_li_sceond" style="width: 20%;">{{it.hlce}}</span>
-                <span class="span_li_sceond" style="width: 20%;">{{it.rzl}}</span>
+              <div style="width: 42%">
+                <div class="li_common_span_min" style="height: 36px;line-height: 36px">
+                  <span class="span_li_sceond" style="width: 15%">{{it.cs1}}</span>
+                  <span class="span_li_sceond" style="width: 15%">{{it.cs2}}</span>
+                  <span class="span_li_sceond" style="width: 15%">{{it.cs3}}</span>
+                  <span class="span_li_sceond" style="width: 30%">{{it.bzhl}}</span>
+                  <span class="span_li_sceond" style="width: 20%;">{{it.hlce}}</span>
+                  <span class="span_li_sceond" style="width: 20%;">{{it.rzl}}</span>
+                </div>
               </div>
-            </div>
-            <div style="width: 13%">
-              <div class="data_li">{{it.bz}}</div>
+              <div style="width: 13%">
+                <div class="data_li">{{it.bz}}</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <img src="../../static/hkwarn/searchitem.png" class="flex_img" @click="hideCheck">
     </div>
     <div v-show="showrl" style="background-color: #ffffff;">
       <div  style="padding:10px;">
         <popup v-model="showrl" class="checker-popup">
           <div style="border-bottom: 1px solid #cccccc;">
-            <p style="padding: 5px 0 5px 20px;color:#888; display: flex;align-items: center;justify-content: space-between">
+            <p style="height: 50px;color:#888; display: flex;align-items: center;justify-content: space-between">
               <span style="font-size: 14px;color: black">选择鸡舍</span>
               <span style="font-size: 14px;background-color: aqua;border-radius: 5px;width: 45px;height: 25px;line-height: 25px;color: black" @click="checkallBarton" v-show="allcheck">全选</span>
               <span style="font-size: 14px;background-color: aqua;border-radius: 5px;width: 45px;height: 25px;line-height: 25px;color: black" @click="checkallBarton" v-show="!allcheck">反选</span>
@@ -108,16 +112,17 @@
         </popup>
       </div>
     </div>
-    <img src="../../static/hkwarn/searchitem.png" class="flex_img" @click="hideCheck">
   </div>
 </template>
 
 <script>
   import api from '../api/api'
-  // import ding from '@/lib/ding'
+  import ding from './../lib/ding'
   export default {
     data () {
       return {
+        show_loading: true,
+        jiazai: '数据加载中',
         allst1: '',
         allst2: '',
         diffallst: '',
@@ -130,7 +135,14 @@
         allcheck: true,
         seltime: '',
         chang: '',
-        changId: ''
+        changId: '',
+        dateobj: {
+          date1: '',
+          date2: '',
+          date3: '',
+          date4: '',
+          date5: ''
+        }
       }
     },
     watch: {
@@ -154,6 +166,16 @@
       }
     },
     created () {
+      let now = new Date();
+      let yy = now.getFullYear(); // 年
+      let mm = now.getMonth() + 1; // 月
+      let dd = now.getDate();
+      let clock = yy + '-';
+      if (mm < 10) clock += '0';
+      clock += mm + '-';
+      if (dd < 10) clock += '0';
+      clock += dd;
+      this.seltime = clock;
       let params = {
         mydate: '',
         werks: ''
@@ -171,6 +193,7 @@
             _that.allst2 = res.data.data.allst2
             _that.diffallst = res.data.data.diffallst
             _that.shedate = res.data.data.date
+            _that.dateobj = _that.shedate[0]
             _that.shedata = res.data.data.data
             // 增加一個屬性 showshe = false;
             // let list = []
@@ -179,6 +202,13 @@
               // list.push(item)
             })
             // _that.shedata = list
+            _that.show_loading = false
+          }
+          if (!res.data.code) {
+            ding.showToast(res.data.message)
+            setTimeout(function () {
+              _that.$router.go(-1)
+            }, 1000)
           }
         })
       },
@@ -219,6 +249,7 @@
           mydate: this.seltime,
           werks: this.changId
         }
+        this.show_loading = true
         console.log(params)
         this.initData(params);
         this.showrl = !this.showrl
@@ -236,12 +267,12 @@
   .li_common {
     height: 80px;
     line-height: 80px;
-    border: 1px solid red;
+    border: 1px solid #fff;
   }
   .li_common_span {
     height: 40px;
     line-height: 40px;
-    border: 1px solid red;
+    border: 1px solid #fff;
   }
   .li_common_span_min {
     display: flex;
@@ -252,7 +283,7 @@
     line-height: 39px;
   }
   .span_li {
-    border: 1px solid red;
+    border: 1px solid #fff;
     width: 33.3%
   }
   .p_li {
@@ -260,12 +291,12 @@
     line-height: 19px;
   }
   .span_li_sceond {
-    border: 1px solid red;
+    border: 1px solid #fff;
   }
   .data_li {
     height: 35px;
     line-height: 35px;
-    border: 1px solid red;
+    border: 1px solid #fff;
   }
   .flex_img {
     flex: 100;

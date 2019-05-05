@@ -21,7 +21,7 @@
           <div style="border-bottom: 1px solid #cccccc;">
             <p style="padding: 5px 0 5px 20px;color:#888; display: flex;align-items: center;justify-content: space-between">
               <span style="font-size: 14px;">选择鸡场</span>
-              <span @click="hideCheck()"><icon type="clear" style="font-size: 25px"></icon></span>
+              <span @click="hideCheck()" class="btn_srue">确定</span>
             </p>
           </div>
           <checker
@@ -40,7 +40,7 @@
           <div style="border-bottom: 1px solid #cccccc;">
             <p style="padding: 5px 0 5px 20px;color:#888; display: flex;align-items: center;justify-content: space-between">
               <span style="font-size: 14px;">选择鸡舍</span>
-              <span @click="hideBarton()"><icon type="clear" style="font-size: 25px"></icon></span>
+              <span @click="hideBarton()" class="btn_srue">确定</span>
             </p>
           </div>
           <checker
@@ -59,6 +59,7 @@
 <script>
   import api from '../api/api'
   import baseConfig from '../api/baseConfig'
+  import ding from './../lib/ding'
   let echarts = require('echarts/lib/echarts')
   require('echarts/lib/chart/bar')
   require('echarts/lib/chart/line')
@@ -323,7 +324,7 @@
           console.log(res)
           if (!res.data.code) {
             _that.showjs = false
-            alert(res.data.message)
+            ding.showToast(res.data.message)
           }
           if (res.data.code) {
             let jsonData = res.data.data;
@@ -459,7 +460,7 @@
           console.log(res)
           if (!res.data.code) {
             _that.showjs = false
-            alert(res.data.message)
+            ding.showToast(res.data.message)
           }
           if (res.data.code) {
             _that.showjs = false
@@ -567,7 +568,14 @@
     width: 100%;
     margin-top: 30px;
     background-color: #f5f5f5;
-    /*box-shadow:2px 2px 5px #333333;*/
+    box-shadow:2px 2px 5px #333333;
+  }
+  .btn_srue {
+    background-color: #e5e5e5;
+    width: 15%;
+    border-radius: 5px;
+    color: black;
+    margin-right: 10px;
   }
 </style>
 <style>

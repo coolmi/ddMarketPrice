@@ -8,71 +8,85 @@
       style="width: 100%;">
       <el-table-column
         fixed
+        align="center"
         prop="werks"
         label="鸡场"
         width="120">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="leibieWerks"
         label="鸡源性质"
         width="80">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="inTimeWerks"
         label="进鸡日期"
         width="100">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="outTimeWerks"
         label="出栏日期"
         width="100">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="inTotalWerks"
         label="进鸡只数(万)"
         width="110">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="outZZLWerks"
         label="出栏重量(吨)"
         width="120">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="daageWerks"
         label="日龄"
         width="50">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="dzzlWerks"
         label="单只重"
         width="70">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="chlWerks"
         label="成活率"
         width="70">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="lbWerks"
         label="料比"
         width="70">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="ouzhiWerks"
         label="欧指"
         width="70">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="pfcrWerks"
         label="平方产肉量(kg)"
         width="120">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="rzzWerks"
         label="日增重(g)"
         width="100">
       </el-table-column>
       <el-table-column
+        align="center"
         prop="yfWerks"
         label="药费"
         width="70">

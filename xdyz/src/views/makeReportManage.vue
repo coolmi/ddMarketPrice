@@ -11,6 +11,7 @@
 
 <script>
   import api from '../api/api'
+  import ding from './../lib/ding'
   let echarts = require('echarts/lib/echarts')
   require('echarts/lib/chart/bar')
   require('echarts/lib/chart/line')
@@ -26,14 +27,14 @@
             trigger: 'axis'
           },
           legend: {
-            top: '370',
-            left: '3%',
+            top: '400',
+            left: '12%',
             data: []
           },
           grid: {
-            top: '5%',
-            left: '15%',
-            right: '15%',
+            top: '10%',
+            left: '14%',
+            right: '12%',
             show: 'true',
             height: '300'
           },
@@ -66,7 +67,7 @@
       }
     },
     created() {
-      let params = this.$route.query
+      let params = this.$route.query.params
       console.log(params);
       this.initData(params);
     },
@@ -93,7 +94,7 @@
         api.getTargetRepaort(params, function (res) {
           console.log(res)
           if (!res.data.code) {
-            alert(res.data.message)
+            ding.showToast(res.data.message)
             setTimeout(function () {
               _that.$router.go(-1)
             }, 1000)
@@ -115,9 +116,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    /*width: 100%;*/
-    margin-top: 30px;
     background-color: #f5f5f5;
-    /*box-shadow:2px 2px 5px #333333;*/
+    box-shadow:2px 2px 5px #333333;
   }
 </style>

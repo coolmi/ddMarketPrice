@@ -11,6 +11,7 @@
 
 <script>
   import api from '../api/api'
+  import ding from './../lib/ding'
   let echarts = require('echarts/lib/echarts')
   require('echarts/lib/chart/bar')
   require('echarts/lib/chart/line')
@@ -24,7 +25,6 @@
         option: {
           title: {
             top: 10,
-            padding: 0,
             text: '',
             x: 'center'
           },
@@ -36,7 +36,7 @@
           },
           legend: {
             top: '300',
-            left: '10%',
+            left: '7%',
             data: []
             // right: 0,
             // width: '1%'
@@ -84,7 +84,8 @@
       }
     },
     created() {
-      let params = this.$route.query
+      let params = this.$route.query.params
+      alert(JSON.stringify(params))
       console.log(params);
       this.initData(params);
     },
@@ -111,7 +112,7 @@
         api.getTargetRepaort(params, function (res) {
           console.log(res)
           if (!res.data.code) {
-            alert(res.data.message)
+            ding.showToast(res.data.message)
             setTimeout(function () {
               _that.$router.go(-1)
             }, 1000)

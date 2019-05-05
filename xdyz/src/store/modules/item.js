@@ -1,30 +1,28 @@
 const state = {
-  info: null,
-  queryInfo: null
+  time: ''
 }
 
 const actions = {
-  saveRcInfo({ commit }, info) {
-    commit('SAVE_RC_INFO', info);
+  saveTime({ commit }, time) {
+    commit('SAVE_TIME', time);
   },
-  saveQueryContent({ commit }, info) {
-    commit('SAVE_QUERY_CONTENT', info);
+  clearTime({ commit }) {
+    commit('CLEAR_TIME');
   }
 }
 
 const mutations = {
-  'SAVE_RC_INFO'(state, info) {
-    state.info = null
-    state.info = info
+  'SAVE_TIME'(state, time) {
+    state.time = time
   },
-  'SAVE_QUERY_CONTENT'(state, info) {
-    state.queryInfo = null
-    state.queryInfo = info
+  'CLEAR_TIME'(state) {
+    debugger
+    state.time = ''
   }
 }
 
 const getters = {
-    getQueryInfo: state => state.queryInfo
+    getTime: state => state.time
 }
 
 export default {
