@@ -8,9 +8,9 @@
         <x-input title="日期" v-model="barInfo.datum" text-align="center" readonly style="color: #B8B8B8"></x-input>
       </group>
       <group label-width="7rem" label-align="left" style="box-shadow: 2px 2px 5px #B3B3B3;">
-        <x-input :title="'死亡只数(' + barInfo.fedea + ')'" v-model="deadnum" text-align="center" type="number"></x-input>
-        <x-input :title="'淘汰只数(' + barInfo.feeli + ')'" v-model="outnum" text-align="center" type="number"></x-input>
-        <x-textarea title="备注" placeholder="录入为负数请备注!" v-model="remarkbz" autosize></x-textarea>
+        <x-input :title="'死亡只数(' + barInfo.fedea + ')'" v-model="deadnum" text-align="center"></x-input>
+        <x-input :title="'淘汰只数(' + barInfo.feeli + ')'" v-model="outnum" text-align="center"></x-input>
+        <x-textarea title="备注" placeholder="录入为负数请备注!" v-if="Number(deadnum) < 0 || Number(outnum) < 0" v-model="remarkbz" autosize></x-textarea>
       </group>
     </div>
     <div>
@@ -56,17 +56,26 @@
             let timeval = res.data.data.datum
             _that.barInfo.feeli = res.data.data.feeli
             _that.barInfo.fedea = res.data.data.fedea
-            var ti = new Date(timeval);
-            var y = ti.getFullYear();
-            var m = ti.getMonth() + 1;
-            var d = ti.getDate();
+            let ti = new Date(timeval);
+            let y = ti.getFullYear();
+            let m = ti.getMonth() + 1;
+            let d = ti.getDate();
             _that.barInfo.datum = y + '-' + _that.add0(m) + '-' + _that.add0(d);
           }
         })
       },
       savebarInfo () {
         let _that = this
-        if (_that.deadnum < 0 || _that.outnum < 0) {
+        let reg = /^-?\d+$/
+        if (!reg.test(Number(_that.deadnum)) || _that.deadnum === '') {
+          ding.showToast('请正确录入死亡只数!')
+          return;
+        }
+        if (!reg.test(Number(_that.outnum)) || _that.outnum === '') {
+          ding.showToast('请正确录入淘汰只数!')
+          return;
+        }
+        if (Number(_that.deadnum) < 0 || Number(_that.outnum) < 0) {
           if (_that.remarkbz === '') {
             ding.showToast('录入为负数请备注!')
             return;
@@ -82,7 +91,7 @@
           feeli: _that.outnum,
           remarkbz: _that.remarkbz
         }
-        console.log(params);
+        alert(JSON.stringify(params));
         api.saveModDailyEliInfoRecord(params, function (res) {
           console.log(res);
           if (res.data.code) {
