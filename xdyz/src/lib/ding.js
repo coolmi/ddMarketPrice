@@ -2,7 +2,7 @@
  * 关于钉钉的一些配置
  */
 import dingApiConfig from '@/lib/dingApiConfig'
-import store from '../index'
+import store from '../store/index'
 import api from '@/api/api'
 import FlowError from '@/lib/FlowError'
 let _ = require('lodash/fp/object');

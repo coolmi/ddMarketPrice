@@ -4,36 +4,35 @@
       <swiper-item>
         <div class="bgcard bgcard1">
           <div class="title-box">
-            现代化养殖
           </div>
           <div class="img-box">
-            <img src="../../static/breedImg/home.png" style="height: 460px;width: 100%;margin-top: 140px;" alt="">
+            <img src="../../static/breedImg/tpinfo.png">
           </div>
           <div class="forms-box">
             <ul>
               <li @click="toReport()">
                 <img src="../../static/breedImg/menu1.png">
-                <span>报表管理</span>
+                <span style="font-size: 12px">报表管理</span>
               </li>
               <li @click="hkInfoShow()">
                 <img src="../../static/breedImg/ZB.png">
-                <span>环控数据</span>
+                <span style="font-size: 12px">环控数据</span>
               </li>
               <li @click="toCons()">
                 <img src="../../static/breedImg/menu3.png">
-                <span>环控对比</span>
+                <span style="font-size: 12px">环控对比</span>
               </li>
               <li @click="checkHk()">
                 <img src="../../static/breedImg/menu4.png">
-                <span>环控配置</span>
+                <span style="font-size: 12px">环控配置</span>
               </li>
               <li @click="hkWarnShow()">
                 <img src="../../static/breedImg/menu5.png">
-                <span>警告信息</span>
+                <span style="font-size: 12px">警告信息</span>
               </li>
               <li @click="fhhkWarnShow()">
                 <img src="../../static/breedImg/CLYS.png">
-                <span>生产录入</span>
+                <span style="font-size: 12px">生产录入</span>
               </li>
             </ul>
           </div>
@@ -154,7 +153,7 @@
     border-radius: 10px;
   }
   .bgcard1{
-    /*background: url("../../static/breedImg/bgc.png");*/
+    background: url("../../static/breedImg/bgc.png");
   }
   .title-box{
     width: 100%;

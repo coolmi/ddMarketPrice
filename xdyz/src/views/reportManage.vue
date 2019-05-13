@@ -12,37 +12,47 @@
     </div>
     <div class="title_select" @click="checkBarton(2)">
       <span>批次</span>
-      <span class="text_show" >{{pici}}</span>
+      <span class="text_show">{{pici}}</span>
       <img src="../../static/right_arrow.png" style="width: 15px">
     </div>
     <div v-show="showcs" style="background-color: #ffffff;">
-      <div  style="padding:10px;">
+      <div style="padding:10px;">
         <popup v-model="showcs" class="checker-popup">
           <div style="border-bottom: 1px solid #cccccc;">
-            <p style="padding: 5px 0 5px 20px;color:#888; display: flex;align-items: center;justify-content: space-between">
+            <p
+              style="padding: 5px 0 5px 20px;color:#888; display: flex;align-items: center;justify-content: space-between">
               <span style="font-size: 14px;color: black">选择鸡场</span>
               <span @click="hideCheck()" class="btn_srue">确定</span>
             </p>
           </div>
-          <checker
-            v-model="demo1"
-            type="checkbox"
-            default-item-class="demo4-item"
-            selected-item-class="demo4-item-selected"
-            disabled-item-class="demo4-item-disabled">
-            <checker-item v-for="(item, index) in farmslist" :key="index" v-model="item.name">{{item.name}}</checker-item>
-          </checker>
+          <div v-for="(per, index) in farmslist" :key="index"
+               style="font-size: 20px;text-align: left;border-bottom: 1px solid #e5e5e5;">
+            <span style="margin: 10px;">{{per.name}}</span>
+            <checker
+              v-model="demo1"
+              default-item-class="demo4-item"
+              selected-item-class="demo4-item-selected"
+              disabled-item-class="demo4-item-disabled">
+              <checker-item v-for="(item, index) in per.list" :key="index" v-model="item.name">{{item.name}}
+              </checker-item>
+            </checker>
+          </div>
         </popup>
       </div>
     </div>
     <div v-show="showjs" style="background-color: #ffffff;">
-      <div  style="padding:10px;">
+      <div style="padding:10px;">
         <popup v-model="showjs" class="checker-popup">
           <div style="border-bottom: 1px solid #cccccc;">
-            <p style="padding: 5px 0 5px 20px;color:#888; display: flex;align-items: center;justify-content: space-between">
+            <p
+              style="padding: 5px 0 5px 20px;color:#888; display: flex;align-items: center;justify-content: space-between">
               <span style="font-size: 14px;color: black">选择鸡舍</span>
-              <span style="font-size: 14px;background-color: aqua;border-radius: 5px;width: 45px;height: 25px;line-height: 25px;color: black" @click="checkallBarton" v-show="allcheck">全选</span>
-              <span style="font-size: 14px;background-color: aqua;border-radius: 5px;width: 45px;height: 25px;line-height: 25px;color: black" @click="checkallBarton" v-show="!allcheck">反选</span>
+              <span
+                style="font-size: 14px;background-color: aqua;border-radius: 5px;width: 45px;height: 25px;line-height: 25px;color: black"
+                @click="checkallBarton" v-show="allcheck">全选</span>
+              <span
+                style="font-size: 14px;background-color: aqua;border-radius: 5px;width: 45px;height: 25px;line-height: 25px;color: black"
+                @click="checkallBarton" v-show="!allcheck">反选</span>
               <span @click="hideBarton()" class="btn_srue">确定</span>
             </p>
           </div>
@@ -58,10 +68,11 @@
       </div>
     </div>
     <div v-show="showpc" style="background-color: #ffffff;">
-      <div  style="padding:10px;">
+      <div style="padding:10px;">
         <popup v-model="showpc" class="checker-popup">
           <div style="border-bottom: 1px solid #cccccc;">
-            <p style="padding: 5px 0 5px 20px;color:#888; display: flex;align-items: center;justify-content: space-between">
+            <p
+              style="padding: 5px 0 5px 20px;color:#888; display: flex;align-items: center;justify-content: space-between">
               <span style="font-size: 14px;color: black">选择批次</span>
               <span @click="hideCheckpc()" class="btn_srue">确定</span>
             </p>
@@ -72,7 +83,8 @@
             default-item-class="demo4-item-pc"
             selected-item-class="demo4-item-selected"
             disabled-item-class="demo4-item-disabled">
-            <checker-item v-for="(item, index) in picilist" :key="index" v-model="item.name">{{item.name}}</checker-item>
+            <checker-item v-for="(item, index) in picilist" :key="index" v-model="item.name">{{item.name}}
+            </checker-item>
           </checker>
         </popup>
       </div>
@@ -86,6 +98,7 @@
 <script>
   import api from '../api/api'
   import ding from './../lib/ding'
+
   export default {
     data() {
       return {
@@ -109,20 +122,22 @@
       }
     },
     watch: {
-      demo1 () {
+      demo1() {
         let list = [];
         let _that = this;
         _that.chang = _that.demo1.toString()
         _that.farmslist.forEach(function (item) {
-          _that.chang.split(',').forEach(function (im) {
-            if (im === item.name) {
-              list.push(item.id)
-            }
+          item.list.forEach(function (far) {
+            _that.chang.split(',').forEach(function (im) {
+              if (im === far.name) {
+                list.push(far.id)
+              }
+            })
           })
         })
         _that.changId = list.toString()
       },
-      demo2 () {
+      demo2() {
         let list = [];
         let listname = [];
         let _that = this;
@@ -140,7 +155,7 @@
         })
         _that.sheId = list.toString()
       },
-      demo3 () {
+      demo3() {
         let list = [];
         let _that = this;
         _that.pici = _that.demo3.toString()
@@ -172,7 +187,7 @@
         this.showpc = !this.showpc
       },
       // 全选舍功能
-      checkallBarton () {
+      checkallBarton() {
         this.allcheck = !this.allcheck
         let list = []
         this.bartons.forEach(function (item) {
@@ -185,18 +200,25 @@
         }
       },
       // 获取场
-      getFarms () {
+      getFarms() {
         let _that = this
         let params = {}
         api.getAc2000Select(params, function (res) {
           console.log(res);
+          let farmobj = res.data.data.farms
           if (res.data.code) {
-            _that.farmslist = res.data.data.farms
+            for (let obj in farmobj) {
+              let par = {
+                name: obj.substr(1),
+                list: res.data.data.farms[obj]
+              }
+              _that.farmslist.push(par)
+            }
           }
         })
       },
       // 通过场拿舍、批次
-      checkBarton (val) {
+      checkBarton(val) {
         let _that = this
         let params = {
           farmId: this.changId || ''
@@ -233,7 +255,7 @@
         }
       },
       // 生成报表
-      makeReport () {
+      makeReport() {
         let params = {
           flag: this.flag,
           werks: this.changId,
@@ -272,6 +294,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
   .demo4-item-pc {
     background-color: #ddd;
     color: #222;
@@ -287,16 +310,20 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
   .demo4-item-selected {
     background-color: lightgreen;
     color: #fff;
   }
+
   .demo4-item-disabled {
     color: #999;
   }
-  .checker-popup{
+
+  .checker-popup {
     min-height: 50%;
   }
+
   .title_select {
     display: flex;
     justify-content: space-between;
@@ -307,11 +334,13 @@
     border-bottom: 1px solid #e5e5e5;
     /*border: 1px solid red*/
   }
+
   .text_show {
     font-size: 9px;
     color: lawngreen;
     width: 70%;
   }
+
   .btn_srue {
     background-color: #e5e5e5;
     width: 15%;

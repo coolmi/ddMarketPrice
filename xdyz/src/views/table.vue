@@ -213,13 +213,18 @@
               <span @click="hideCheck()"><icon type="clear" style="font-size: 25px"></icon></span>
             </p>
           </div>
-          <checker
-            v-model="demo4"
-            default-item-class="demo4-item"
-            selected-item-class="demo4-item-selected"
-            disabled-item-class="demo4-item-disabled">
-            <checker-item v-for="(item, index) in farmslist" :key="index" v-model="item.label" @on-item-click="checkBarton(item.value)">{{item.label}}</checker-item>
-          </checker>
+          <div v-for="(per, index) in farmslist" :key="index"
+               style="text-align: left;border-bottom: 1px solid #e5e5e5;margin-top: 20px">
+            <span style="margin: 10px;font-size: 20px;">{{per.name}}</span>
+            <checker
+              v-model="demo4"
+              default-item-class="demo4-item"
+              selected-item-class="demo4-item-selected"
+              disabled-item-class="demo4-item-disabled">
+              <checker-item v-for="(item, index) in per.list" :key="index" v-model="item.name" @on-item-click="checkBarton(item.id)">{{item.name}}
+              </checker-item>
+            </checker>
+          </div>
         </popup>
       </div>
     </div>
@@ -315,8 +320,15 @@
         let _that = this;
         api.getALLFarm(data, function (res) {
           console.log(res)
+          let farmobj = res.data.data.farms
           if (res.data.code) {
-            _that.farmslist = res.data.data.farms
+            for (let obj in farmobj) {
+              let par = {
+                name: obj.substr(1),
+                list: res.data.data.farms[obj]
+              }
+              _that.farmslist.push(par)
+            }
           }
         })
       }
@@ -394,6 +406,7 @@
     font-size: 14px;
     text-align: center;
     margin: @check-width2 / 6;
+    margin-top: 10px;
     padding: 5px 0;
     line-height: 18px;
     border-radius: 5px;

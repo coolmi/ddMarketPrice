@@ -132,14 +132,6 @@
           }
           if (!res.data.code) {
             ding.showToast(res.data.message)
-            // let dd = window.dd
-            // setTimeout(function () {
-            //   dd.biz.navigation.close({
-            //     onSuccess: function(result) {
-            //     },
-            //     onFail: function(err) {}
-            //   })
-            // }, 1000)
           }
         })
       },

@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import ddstate from '../src/store/modules/ddstate'
-import loading from '../src/store/modules/loading'
-import item from '../src/store/modules/item'
+import ddstate from './modules/ddstate'
+import loading from './modules/loading'
+import item from './modules/item'
 
 Vue.use(Vuex);
 

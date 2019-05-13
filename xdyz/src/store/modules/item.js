@@ -16,7 +16,6 @@ const mutations = {
     state.time = time
   },
   'CLEAR_TIME'(state) {
-    debugger
     state.time = ''
   }
 }

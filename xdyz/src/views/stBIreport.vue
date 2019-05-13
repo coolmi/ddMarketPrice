@@ -101,14 +101,17 @@
             </p>
           </div>
           <calendar v-model="seltime" title="日期" placeholder="请选择日期"></calendar>
-          <checker
-            v-model="demo4"
-            type="checkbox"
-            default-item-class="demo4-item"
-            selected-item-class="demo4-item-selected"
-            disabled-item-class="demo4-item-disabled">
-            <checker-item v-for="(item, index) in farmslist" :key="index" v-model="item.name">{{item.name}}</checker-item>
-          </checker>
+          <div v-for="(per, index) in farmslist" :key="index" style="font-size: 20px;text-align: left;border-bottom: 1px solid #e5e5e5;">
+            <span style="margin: 10px;">{{per.name}}</span>
+            <checker
+              v-model="demo4"
+              type="checkbox"
+              default-item-class="demo4-item"
+              selected-item-class="demo4-item-selected"
+              disabled-item-class="demo4-item-disabled">
+              <checker-item v-for="(item, index) in per.list" :key="index" v-model="item.name">{{item.name}}</checker-item>
+            </checker>
+          </div>
         </popup>
       </div>
     </div>
@@ -152,14 +155,16 @@
         let _that = this;
         _that.chang = _that.demo4.toString()
         _that.farmslist.forEach(function (item) {
-          listname.push(item.name)
-          if (_that.demo2 === listname.toString()) {
-            _that.changId = 'ALL'
-          }
-          _that.chang.split(',').forEach(function (im) {
-            if (im === item.name) {
-              list.push(item.id)
+          item.list.forEach(function (far) {
+            listname.push(item.name)
+            if (_that.demo2 === listname.toString()) {
+              _that.changId = 'ALL'
             }
+            _that.chang.split(',').forEach(function (im) {
+              if (im === far.name) {
+                list.push(far.id)
+              }
+            })
           })
         })
         _that.changId = list.toString()
@@ -218,8 +223,15 @@
         let params = {}
         api.getAc2000Select(params, function (res) {
           console.log(res);
+          let farmobj = res.data.data.farms
           if (res.data.code) {
-            _that.farmslist = res.data.data.farms
+            for (let obj in farmobj) {
+              let par = {
+                name: obj.substr(1),
+                list: res.data.data.farms[obj]
+              }
+              _that.farmslist.push(par)
+            }
           }
         })
       },

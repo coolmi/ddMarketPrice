@@ -9,6 +9,7 @@
 
 <script>
   import api from '../api/api'
+  import ding from './../lib/ding'
   import { mapGetters } from 'vuex'
   export default {
     data() {
@@ -58,19 +59,20 @@
       getFarms () {
         let _that = this
         let params = {}
-        api.getAc2000Select(params, function (res) {
+        api.getAc2000SelectSCLR(params, function (res) {
           console.log(res);
           if (res.data.code) {
             _that.farmslist = res.data.data.farms
             let obj = res.data.data.farms[0]
             _that.changId = obj.id
             let params = {
-              farmId: _that.changId
+              id: _that.changId
             }
-            api.getBartonByMoreFarm(params, function (res) {
-              console.log(res);
+            api.getWerkByPerson(params, function (res) {
               if (res.data.code) {
                 _that.bartons = res.data.data.bartons;
+              } else {
+                ding.showToast(res.data.message)
               }
             })
           }

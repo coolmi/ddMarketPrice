@@ -1,7 +1,7 @@
 /**
  * Created by lzl on 17/2/14.
  */
-import store from '../index'
+import store from '../store/index'
 
 export function showMore(flag) {
   store.dispatch('showMore', flag);

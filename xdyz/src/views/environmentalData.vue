@@ -13,7 +13,6 @@
     </div>
     <div class="echats_all">
       <div id="main" style="width: 90%;height: 400px;margin-top: 30px"></div>
-      <!--<img src="../../static/bigs.png" alt="" style="height: 38px;width: 10%;margin: 10px 10px 0 0;" @click="newScreen">-->
     </div>
     <div v-show="showcs" style="background-color: #ffffff;">
       <div  style="padding:10px;">
@@ -24,13 +23,18 @@
               <span @click="hideCheck()" class="btn_srue">确定</span>
             </p>
           </div>
-          <checker
-            v-model="demo4"
-            default-item-class="demo4-item"
-            selected-item-class="demo4-item-selected"
-            disabled-item-class="demo4-item-disabled">
-            <checker-item v-for="(item, index) in farmslist" :key="index" v-model="item.label" @on-item-click="checkBarton(item.value)">{{item.label}}</checker-item>
-          </checker>
+          <div v-for="(per, index) in farmslist" :key="index"
+               style="font-size: 20px;text-align: left;border-bottom: 1px solid #e5e5e5;">
+            <span style="margin: 10px;">{{per.name}}</span>
+            <checker
+              v-model="demo4"
+              default-item-class="demo4-item"
+              selected-item-class="demo4-item-selected"
+              disabled-item-class="demo4-item-disabled">
+              <checker-item v-for="(item, index) in per.list" :key="index" v-model="item.name" @on-item-click="checkBarton(item.id)">{{item.name}}
+              </checker-item>
+            </checker>
+          </div>
         </popup>
       </div>
     </div>
@@ -410,8 +414,15 @@
         let _that = this;
         api.getALLFarm(data, function (res) {
           console.log(res)
+          let farmobj = res.data.data.farms
           if (res.data.code) {
-            _that.farmslist = res.data.data.farms
+            for (let obj in farmobj) {
+              let par = {
+                name: obj.substr(1),
+                list: res.data.data.farms[obj]
+              }
+              _that.farmslist.push(par)
+            }
           }
         })
       },

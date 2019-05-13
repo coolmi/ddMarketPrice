@@ -86,7 +86,7 @@ export default {
    * @param cb
    */
   getALLFarm: function (params, cb) {
-    axios.post('/breed/api/v1/batch/getALLFarm', params)
+    axios.post('/breed/api/v1/batch/getALLFarmApp', params)
       .then((res) => {
         cb(res)
       }).catch((error) => {
@@ -134,6 +134,18 @@ export default {
    * @param cb
    */
   getAc2000Select: function (params, cb) {
+    axios.post('/breed/api/v1/ac2000/getAc2000SelectApp', params)
+      .then((res) => {
+        cb(res)
+      }).catch((error) => {
+      return Promise.reject(error)
+    })
+  },
+  /**
+   * 获取生产录入场
+   * @param cb
+   */
+  getAc2000SelectSCLR: function (params, cb) {
     axios.post('/breed/api/v1/ac2000/getAc2000Select', params)
       .then((res) => {
         cb(res)
@@ -303,6 +315,18 @@ export default {
    */
   saveModDailyEliInfoRecord: function (params, cb) {
     axios.post('/breed/api/v1/breedproduct/saveModDailyEliInfoRecord', params)
+      .then((res) => {
+        cb(res)
+      }).catch((error) => {
+      return Promise.reject(error)
+    })
+  },
+  /**
+   * 生产录入 获取鸡舍
+   * @param cb
+   */
+  getWerkByPerson: function (params, cb) {
+    axios.post('/breed/api/v1/batch/getWerkByPerson', params)
       .then((res) => {
         cb(res)
       }).catch((error) => {

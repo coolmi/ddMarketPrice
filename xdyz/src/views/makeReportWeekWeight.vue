@@ -85,7 +85,6 @@
     },
     created() {
       let params = this.$route.query.params
-      alert(JSON.stringify(params))
       console.log(params);
       this.initData(params);
     },
@@ -102,7 +101,6 @@
        *echats初始化
        */
       drawLine() {
-        // debugger
         this.sleep(1000);
         let test = echarts.init(document.getElementById('main'))
         test.setOption(this.option);

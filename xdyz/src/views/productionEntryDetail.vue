@@ -1,21 +1,22 @@
 <template>
   <div>
     <div style="background-color: #e5e5e5;">
-      <group label-width="5rem" label-align="left" style="box-shadow: 2px 2px 5px #B3B3B3;">
-        <x-input title="鸡舍" v-model="barInfo.bartonName" text-align="center" readonly style="color: #B8B8B8"></x-input>
-        <x-input title="订单编号" v-model="barInfo.batchAufnr" text-align="center" readonly style="color: #B8B8B8"></x-input>
-        <x-input title="日龄" v-model="barInfo.daage" text-align="center" readonly style="color: #B8B8B8"></x-input>
-        <x-input title="日期" v-model="barInfo.datum" text-align="center" readonly style="color: #B8B8B8"></x-input>
+      <group label-width="10rem" label-align="left" style="box-shadow: 2px 2px 5px #B3B3B3;">
+        <x-input title="鸡舍" v-model="barInfo.bartonName" text-align="left" readonly style="color: #B8B8B8"></x-input>
+        <x-input title="订单编号" v-model="barInfo.batchAufnr" text-align="left" readonly style="color: #B8B8B8"></x-input>
+        <x-input title="日龄" v-model="barInfo.daage" text-align="left" readonly></x-input>
+        <x-input title="日期" v-model="barInfo.datum" text-align="left" readonly></x-input>
       </group>
-      <group label-width="7rem" label-align="left" style="box-shadow: 2px 2px 5px #B3B3B3;">
+      <group label-width="10rem" label-align="left" style="box-shadow: 2px 2px 5px #B3B3B3;">
         <x-input :title="'死亡只数(' + barInfo.fedea + ')'" v-model="deadnum" text-align="center"></x-input>
         <x-input :title="'淘汰只数(' + barInfo.feeli + ')'" v-model="outnum" text-align="center"></x-input>
-        <x-textarea title="备注" placeholder="录入为负数请备注!" v-if="Number(deadnum) < 0 || Number(outnum) < 0" v-model="remarkbz" autosize></x-textarea>
+        <x-textarea title="备注" placeholder="录入为负数请备注!" v-model="remarkbz" autosize></x-textarea>
       </group>
     </div>
     <div>
-      <box gap="40px 30px" >
-        <x-button text="保存" @click.native="savebarInfo" :gradients="['#1D62F0', '#19D5FD']"></x-button>
+      <box gap="55px 30px" >
+        <x-button text="保存" v-show="btnshow" @click.native="savebarInfo" :gradients="['#1D62F0', '#19D5FD']"></x-button>
+        <x-button text="保存" v-show="!btnshow" :gradients="['#ccc', '#666']"></x-button>
       </box>
     </div>
   </div>
@@ -27,6 +28,7 @@
   export default {
     data() {
       return {
+        btnshow: true,
         datum: '',
         deadnum: '',
         outnum: '',
@@ -61,17 +63,19 @@
             let m = ti.getMonth() + 1;
             let d = ti.getDate();
             _that.barInfo.datum = y + '-' + _that.add0(m) + '-' + _that.add0(d);
+          } else {
+            ding.showToast(res.data.message)
           }
         })
       },
       savebarInfo () {
         let _that = this
         let reg = /^-?\d+$/
-        if (!reg.test(Number(_that.deadnum)) || _that.deadnum === '') {
+        if (!reg.test(Number(_that.deadnum))) {
           ding.showToast('请正确录入死亡只数!')
           return;
         }
-        if (!reg.test(Number(_that.outnum)) || _that.outnum === '') {
+        if (!reg.test(Number(_that.outnum))) {
           ding.showToast('请正确录入淘汰只数!')
           return;
         }
@@ -91,14 +95,16 @@
           feeli: _that.outnum,
           remarkbz: _that.remarkbz
         }
-        alert(JSON.stringify(params));
         api.saveModDailyEliInfoRecord(params, function (res) {
           console.log(res);
           if (res.data.code) {
+            _that.btnshow = false
             ding.showToast(res.data.message)
             setTimeout(function () {
               _that.$router.go(-1)
             }, 800)
+          } else {
+            ding.showToast(res.data.message)
           }
         })
       },
@@ -120,5 +126,11 @@
   }
   .weui-cells:after {
     content: none;
+  }
+  .weui-label {
+    font-size: 25px;
+  }
+  .weui-input {
+    font-size: 25px;
   }
 </style>
