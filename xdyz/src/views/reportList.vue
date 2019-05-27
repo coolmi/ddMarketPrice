@@ -91,19 +91,19 @@
       },
       // 死淘BI
       stBI () {
-        window.location.href = 'dingtalk://dingtalkclient/page/link?url=' + encodeURI(baseConfig.baseURL + '/stBIreport?dd_orientation=landscape&dd_full_screen=true')
+        window.location.href = 'dingtalk://dingtalkclient/page/link?url=' + encodeURI(baseConfig.baseUrlPub + '/stBIreport?dd_orientation=landscape&dd_full_screen=true')
       },
       // 死淘率汇总
       stRate () {
-        window.location.href = 'dingtalk://dingtalkclient/page/link?url=' + encodeURI(baseConfig.baseURL + '/stlSum?dd_orientation=landscape&dd_full_screen=true')
+        window.location.href = 'dingtalk://dingtalkclient/page/link?url=' + encodeURI(baseConfig.baseUrlPub + '/stlSum?dd_orientation=landscape&dd_full_screen=true')
       },
       // 出栏日汇总
       slaughterDayInfo () {
-        window.location.href = 'dingtalk://dingtalkclient/page/link?url=' + encodeURI(baseConfig.baseURL + '/slaughterDay?dd_orientation=landscape&dd_full_screen=true')
+        window.location.href = 'dingtalk://dingtalkclient/page/link?url=' + encodeURI(baseConfig.baseUrlPub + '/slaughterDay?dd_orientation=landscape&dd_full_screen=true')
       },
       // 出栏鸡场汇总
       slaughterWerks () {
-        window.location.href = 'dingtalk://dingtalkclient/page/link?url=' + encodeURI(baseConfig.baseURL + '/slaughterWerks?dd_orientation=landscape&dd_full_screen=true')
+        window.location.href = 'dingtalk://dingtalkclient/page/link?url=' + encodeURI(baseConfig.baseUrlPub + '/slaughterWerks?dd_orientation=landscape&dd_full_screen=true')
       }
     }
   }

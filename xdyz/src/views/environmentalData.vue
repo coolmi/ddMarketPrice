@@ -399,7 +399,7 @@
        *放大
        */
       newScreen () {
-        window.location.href = 'dingtalk://dingtalkclient/page/link?url=' + encodeURI(baseConfig.baseURL + '/monthwd?dd_orientation=landscape&dd_full_screen=true&bartno=' + this.bart)
+        window.location.href = 'dingtalk://dingtalkclient/page/link?url=' + encodeURI(baseConfig.baseUrlPub + '/monthwd?dd_orientation=landscape&dd_full_screen=true&bartno=' + this.bart)
       },
       // 关闭弹窗
       hideCheck() {

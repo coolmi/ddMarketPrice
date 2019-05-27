@@ -258,7 +258,7 @@
           ding.showToast('批次不能为空!')
           return;
         }
-        window.location.href = 'dingtalk://dingtalkclient/page/link?url=' + encodeURI(baseConfig.baseURL + '/makeReportWeekWeight?dd_orientation=landscape&dd_full_screen=true&params=' + params)
+        window.location.href = 'dingtalk://dingtalkclient/page/link?url=' + encodeURI(baseConfig.baseUrlPub + '/makeReportWeekWeight?dd_orientation=landscape&dd_full_screen=true&params=' + params)
       }
     }
   }
