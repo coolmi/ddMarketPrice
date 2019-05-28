@@ -43,6 +43,26 @@ export function getPhoneInfo() {
   });
 }
 
+export function getItcode() {
+  return new Promise((resolve, reject) => {
+    dd.ready(function () {
+      dd.runtime.permission.requestAuthCode({
+        corpId: CORPID,
+        onSuccess: function (result) {
+          api.getItcodeInfo(result.code, function (res) {
+            store.dispatch('updateCode', res.data.data)
+            resolve(res.data.data)
+          })
+        },
+        onFail: function (err) {
+          store.dispatch('updateCode', false)
+          reject(new FlowError('获取免登陆码失败'))
+        }
+      })
+    });
+  });
+}
+
 export function ddLogin(path) {
   return new Promise((resolve, reject) => {
     if (path === undefined || path === '') {
@@ -194,5 +214,6 @@ export default {
   hidePreloader,
   showToast,
   getJSApiList,
-  setLeft
+  setLeft,
+  getItcode
 }

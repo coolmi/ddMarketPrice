@@ -4,50 +4,24 @@ import router from './router'
 import store from './store/index'
 import ding from './lib/ding'
 import 'element-ui/lib/theme-chalk/index.css';
-import { Table, TableColumn } from 'element-ui';
-import echarts from 'echarts'
-import Popup from 'vux/src/components/popup/index.vue'
-import Checker from 'vux/src/components/checker/checker.vue'
-import CheckerItem from 'vux/src/components/checker/checker-item.vue'
-import Icon from 'vux/src/components/icon/index.vue'
-import Selector from 'vux/src/components/selector/index.vue'
-import XButton from 'vux/src/components/x-button/index.vue'
-import Box from 'vux/src/components/box/index.vue'
-import Sticky from 'vux/src/components/sticky/index.vue'
-import Tab from 'vux/src/components/tab/tab.vue'
-import TabItem from 'vux/src/components/tab/tab-item.vue'
-import Group from 'vux/src/components/group/index.vue'
-import InlineLoading from 'vux/src/components/inline-loading/index.vue'
-import Calendar from 'vux/src/components/calendar/index.vue'
-import Swiper from 'vux/src/components/swiper/swiper.vue'
-import SwiperItem from 'vux/src/components/swiper/swiper-item.vue'
-import Cell from 'vux/src/components/cell/index.vue'
-import XInput from 'vux/src/components/x-input/index.vue'
-import XTextarea from 'vux/src/components/x-textarea/index.vue'
-Vue.prototype.$echarts = echarts
+import { Table, TableColumn, Select, DatePicker, TimePicker, Tabs, TabPane, Card, Row, Col, Button, Form, FormItem, Option } from 'element-ui';
 Vue.config.productionTip = false
-Vue.component('popup', Popup);
-Vue.component('checker', Checker);
-Vue.component('checker-item', CheckerItem);
-Vue.component('icon', Icon);
-Vue.component('selector', Selector);
-Vue.component('x-button', XButton);
-Vue.component('box', Box);
-Vue.component('sticky', Sticky);
-Vue.component('tab', Tab);
-Vue.component('tab-item', TabItem);
-Vue.component('group', Group);
-Vue.component('InlineLoading', InlineLoading);
-Vue.component('calendar', Calendar);
-Vue.component('swiper', Swiper);
-Vue.component('swiper-item', SwiperItem);
-Vue.component('cell', Cell);
-Vue.component('x-input', XInput);
-Vue.component('x-textarea', XTextarea);
 Vue.component(Table.name, Table);
 Vue.component(TableColumn.name, TableColumn);
+Vue.component(Select.name, Select);
+Vue.component(Option.name, Option);
+Vue.component(DatePicker.name, DatePicker);
+Vue.component(TimePicker.name, TimePicker);
+Vue.component(Tabs.name, Tabs);
+Vue.component(TabPane.name, TabPane);
+Vue.component(Card.name, Card);
+Vue.component(Row.name, Row);
+Vue.component(Col.name, Col);
+Vue.component(Button.name, Button);
+Vue.component(Form.name, Form);
+Vue.component(FormItem.name, FormItem);
 // initVue()
-ding.ddLogin(location.href).then(data => {
+ding.getItcode().then(data => {
   initVue()
 }).catch((err) => {
   let dd = window.dd
