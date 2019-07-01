@@ -33,12 +33,20 @@
       </el-form-item>
       <el-form-item>
         <el-col :span="11">
-          <el-date-picker v-model="dataForm.beginDate" type="date" placeholder="开始日期" clearable style="width: 100%"></el-date-picker>
+          <el-date-picker v-model="dataForm.beginDate" type="date" placeholder="开始日期" clearable
+                          style="width: 100%"></el-date-picker>
         </el-col>
         <el-col class="line" :span="2">-</el-col>
         <el-col :span="11">
-          <el-date-picker v-model="dataForm.endDate" type="date" placeholder="结束日期" clearable style="width: 100%"></el-date-picker>
+          <el-date-picker v-model="dataForm.endDate" type="date" placeholder="结束日期" clearable
+                          style="width: 100%"></el-date-picker>
         </el-col>
+      </el-form-item>
+      <el-form-item>
+          <el-select v-model="dataForm.priceType" multiple placeholder="价格类型">
+            <el-option v-for="item in priceTypeList" :key="item.value" :label="item.label"
+                       :value="item.value"></el-option>
+          </el-select>
       </el-form-item>
       <el-form-item>
         <el-button @click="getDataList()" style="color: #fff;background-color: #66CCCC">查询</el-button>
@@ -96,6 +104,7 @@
         specificationList: [],
         platformList: [],
         chartLine: null,
+        priceTypeList: [{ value: '1', label: '平台价格' }, { value: '2', label: '活动价格' }],
         dataRule: {
           product: [{ required: true, message: '商品不能为空', trigger: 'blur' }]
         }
@@ -115,9 +124,10 @@
             text: '开始日期不能大于结束日期', // 提示信息
             duration: 2, // 显示持续时间，单位秒，默认按系统规范[android只有两种(<=2s >2s)]
             delay: 0, // 延迟显示，单位秒，默认0
-            onSuccess: function(result) {
+            onSuccess: function (result) {
             },
-            onFail: function(err) {}
+            onFail: function (err) {
+            }
           })
           return;
         }
@@ -127,9 +137,10 @@
             text: '商品不能为空', // 提示信息
             duration: 2, // 显示持续时间，单位秒，默认按系统规范[android只有两种(<=2s >2s)]
             delay: 0, // 延迟显示，单位秒，默认0
-            onSuccess: function(result) {
+            onSuccess: function (result) {
             },
-            onFail: function(err) {}
+            onFail: function (err) {
+            }
           })
           return;
         }
@@ -183,22 +194,62 @@
           }
         })
       },
-      initChartLine(data) {
+      initChartLine (data) {
         let seriesData = []
         for (let i = 0; i < data.legendData.length; i++) {
           let legend = data.legendData[i]
           let lineList = data.reportList[legend]
-          let lineShowDataArr = []
-          for (let j = 0; j < lineList.length; j++) {
-            lineShowDataArr[j] = {
-              x: this.stringToDate(lineList[j].salesDate),
-              y: lineList[j].price,
-              name: lineList[j].mark
+          let priceType = this.dataForm.priceType
+          priceType = priceType === '' ? '1' : priceType
+          if (priceType.concat('1')) {
+            let lineShowDataArr = []
+            for (let j = 0; j < lineList.length; j++) {
+              let name = ''
+              if (lineList[j].salePromotion != null && lineList[j].salePromotion !== '') {
+                name = name + '活动方式：' + lineList[j].salePromotion + ';<br>';
+              }
+              if (lineList[j].mark != null && lineList[j].mark !== '') {
+                name = name + '备注：' + lineList[j].mark + ';';
+              }
+              if (lineList[j].pricePerKg != null && lineList[j].pricePerKg !== '') {
+                lineShowDataArr.push({
+                  x: this.stringToDate(lineList[j].salesDate),
+                  y: lineList[j].pricePerKg,
+                  name: name
+                })
+              }
+            }
+            if (lineShowDataArr.length > 0) {
+              seriesData.push({
+                'name': legend + '-' + '平台价格',
+                'data': lineShowDataArr
+              })
             }
           }
-          seriesData[i] = {
-            'name': legend,
-            'data': lineShowDataArr
+          if (priceType.concat('2')) {
+            let lineShowDataArr = []
+            for (let j = 0; j < lineList.length; j++) {
+              let name = ''
+              if (lineList[j].salePromotion != null && lineList[j].salePromotion !== '') {
+                name = name + '活动方式：' + lineList[j].salePromotion + ';<br>';
+              }
+              if (lineList[j].mark != null && lineList[j].mark !== '') {
+                name = name + '备注：' + lineList[j].mark + ';';
+              }
+              if (lineList[j].promotionPricePerKg != null && lineList[j].promotionPricePerKg !== '') {
+                lineShowDataArr.push({
+                  x: this.stringToDate(lineList[j].salesDate),
+                  y: lineList[j].promotionPricePerKg,
+                  name: name
+                })
+              }
+            }
+            if (lineShowDataArr.length > 0) {
+              seriesData.push({
+                'name': legend + '-' + '活动价格',
+                'data': lineShowDataArr
+              })
+            }
           }
         }
         let option = {
@@ -212,9 +263,9 @@
             'data': data.legendData
           },
           tooltip: {
-            headerFormat: '<b>{series.name}</b>{this.series.mark}<br>',
+            headerFormat: '<b>{ series.name }</b>{ this.series.mark }<br>',
             // pointFormat: '{point.x:%Y-%m-%d}: ￥{point.y:.2f}<br> {point.name}'
-            pointFormatter: function () {
+            pointFormatter: function() {
               let xDate = new Date(this.x)
               let html = xDate.getFullYear() + '-' + (xDate.getMonth() + 1) + '-' + xDate.getDate() + ' ￥' + this.y
               if (this.name != null) {
@@ -231,7 +282,7 @@
           },
           'toolbox': {
             'feature': {
-              'saveAsImage': {}
+              'saveAsImage': { }
             }
           },
           'xAxis': {
@@ -258,7 +309,7 @@
         //   this.chartLine.resize()
         // })
       },
-      initChartBar(data) {
+      initChartBar (data) {
         let seriesData = []
         for (let i = 0; i < data.legendData.length; i++) {
           let legend = data.legendData[i]
@@ -266,11 +317,14 @@
           let showData = []
           for (let j = 0; j < lineList.length; j++) {
             if (lineList[j].salesVolume != null) {
-              showData.push({
-                x: this.stringToDate(lineList[j].salesDate),
-                y: Number(lineList[j].salesVolume),
-                name: lineList[j].mark
-              })
+              let name = ''
+              if (lineList[j].salePromotion != null && lineList[j].salePromotion !== '') {
+                name = name + '活动方式：' + lineList[j].salePromotion + ';<br>';
+              }
+              if (lineList[j].mark != null && lineList[j].mark !== '') {
+                name = name + '备注：' + lineList[j].mark + ';';
+              }
+              showData.push({ x: this.stringToDate(lineList[j].salesDate), y: Number(lineList[j].salesVolume), name: name })
             }
           }
           seriesData[i] = {
@@ -291,7 +345,7 @@
           'tooltip': {
             'headerFormat': '<b>{series.name}</b><br>',
             // 'pointFormat': '{point.x:%Y-%m-%d} {point.y:.2f}'
-            pointFormatter: function () {
+            pointFormatter: function() {
               let xDate = new Date(this.x)
               let html = xDate.getFullYear() + '-' + (xDate.getMonth() + 1) + '-' + xDate.getDate() + ' ￥' + this.y
               if (this.name != null) {
@@ -308,7 +362,7 @@
           },
           'toolbox': {
             'feature': {
-              'saveAsImage': {}
+              'saveAsImage': { }
             }
           },
           'xAxis': {
@@ -334,7 +388,7 @@
         //   this.chartLine.resize()
         // })
       },
-      stringToDate(dateStr, separator) {
+      stringToDate (dateStr, separator) {
         if (!separator) {
           separator = '-'
         }

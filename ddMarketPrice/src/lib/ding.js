@@ -50,8 +50,10 @@ export function getItcode() {
         corpId: CORPID,
         onSuccess: function (result) {
           api.getItcodeInfo(result.code, function (res) {
-            store.dispatch('updateCode', res.data.data)
-            resolve(res.data.data)
+            if (res.data.code) {
+              store.dispatch('updateCode', res.data.data)
+              resolve(res.data.data)
+            }
           })
         },
         onFail: function (err) {

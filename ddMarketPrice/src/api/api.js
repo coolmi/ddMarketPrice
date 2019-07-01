@@ -74,7 +74,7 @@ export default {
    * @param cb
    */
   getSelectData: function (cb) {
-    axios.get('/gmk-marketprice/api/mpc/mpcOnlinesales/selectOptions')
+    axios.get('/gmk-marketprice/mpc/mpcOnlinesales/selectOptions')
       .then((res) => {
         cb(res)
       }).catch((error) => {
@@ -86,7 +86,7 @@ export default {
    * @param cb
    */
   getReportData: function (beginDate, endDate, weight, platform, merchant, product, cb) {
-    axios.get('/gmk-marketprice/api/mpc/mpcOnlinesales/list2?beginDate=' + beginDate + '&endDate=' + endDate + '&weight=' + weight + '&platform=' + platform + '&merchant=' + merchant + '&product=' + product)
+    axios.get('/gmk-marketprice/mpc/mpcOnlinesales/list2?beginDate=' + beginDate + '&endDate=' + endDate + '&weight=' + weight + '&platform=' + platform + '&merchant=' + merchant + '&product=' + product)
       .then((res) => {
         cb(res)
       }).catch((error) => {
