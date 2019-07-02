@@ -470,6 +470,16 @@
             let lineShowDataArr = []
             for (let j = 0; j < lineList.length; j++) {
               let name = ''
+              let salesDate = new Date(lineList[j].salesDate)
+              let salesDateStr = salesDate.getFullYear() + '-' + (salesDate.getMonth() + 1) + '-' + salesDate.getDate()
+              name = name + '日期：' + salesDateStr + '<br>'
+              if (lineList[j].platname != null && lineList[j].platname !== '') {
+                name = name + '平台：' + lineList[j].platname + '<br>'
+              }
+              if (lineList[j].tooltipName != null && lineList[j].tooltipName !== '') {
+                name = name + lineList[j].tooltipName + '<br>'
+              }
+              name = name + '平台价格：' + lineList[j].pricePerKg + '元/kg<br>'
               if (lineList[j].salePromotion != null && lineList[j].salePromotion !== '') {
                 name = name + '活动方式：' + lineList[j].salePromotion + ';<br>';
               }
@@ -495,6 +505,16 @@
             let lineShowDataArr = []
             for (let j = 0; j < lineList.length; j++) {
               let name = ''
+              let salesDate = new Date(lineList[j].salesDate)
+              let salesDateStr = salesDate.getFullYear() + '-' + (salesDate.getMonth() + 1) + '-' + salesDate.getDate()
+              name = name + '日期：' + salesDateStr + '<br>'
+              if (lineList[j].platname != null && lineList[j].platname !== '') {
+                name = name + '平台：' + lineList[j].platname + '<br>'
+              }
+              if (lineList[j].tooltipName != null && lineList[j].tooltipName !== '') {
+                name = name + lineList[j].tooltipName + '<br>'
+              }
+              name = name + '活动价格：' + lineList[j].promotionPricePerKg + '元/kg<br>'
               if (lineList[j].salePromotion != null && lineList[j].salePromotion !== '') {
                 name = name + '活动方式：' + lineList[j].salePromotion + ';<br>';
               }
@@ -588,6 +608,16 @@
           for (let j = 0; j < lineList.length; j++) {
             if (lineList[j].salesVolume != null) {
               let name = ''
+              let salesDate = new Date(lineList[j].salesDate)
+              let salesDateStr = salesDate.getFullYear() + '-' + (salesDate.getMonth() + 1) + '-' + salesDate.getDate()
+              name = name + '日期：' + salesDateStr + '<br>'
+              if (lineList[j].platname != null && lineList[j].platname !== '') {
+                name = name + '平台：' + lineList[j].platname + '<br>'
+              }
+              if (lineList[j].tooltipName != null && lineList[j].tooltipName !== '') {
+                name = name + lineList[j].tooltipName + '<br>'
+              }
+              name = name + '销量：' + lineList[j].salesVolume + '<br>'
               if (lineList[j].salePromotion != null && lineList[j].salePromotion !== '') {
                 name = name + '活动方式：' + lineList[j].salePromotion + ';<br>';
               }
@@ -767,7 +797,7 @@
 </style>
 <style>
   .van-field__control {
-    font-size: 8px;
+    font-size: 9px;
     word-wrap: break-word;
   }
 </style>

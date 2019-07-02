@@ -61,7 +61,7 @@
           @cancel="canceltime"
           @confirm="confirmtime"/>
       </van-popup>
-      <van-button plain type="primary" style="width: 80%;margin: 30px 0" @click="getDatainfo">查询</van-button>
+      <van-button plain type="primary" style="width: 80%;margin: 30px 0;" @click="getDatainfo">查询</van-button>
     </div>
     <div>
       <van-tabs animated v-model="active" color="#9dca70">
@@ -74,8 +74,8 @@
                   <span v-show="obj.price">{{obj.price}}￥</span>
                   <span>较前一日</span>
                   <span v-show="obj.rate === 0">{{obj.rate}}%</span>
-                  <span v-show="obj.rate > 0" style="color: #1afa29">{{obj.rate}}%</span>
-                  <span v-show="obj.rate < 0" style="color: #d81e06">{{obj.rate}}%</span>
+                  <span v-show="obj.rate > 0" style="color: #ff0000">{{obj.rate}}%</span>
+                  <span v-show="obj.rate < 0" style="color: #17b3a3">{{obj.rate}}%</span>
                   <span v-show="obj.rate > 0"><img src="../../static/img/up.png" width="20"></span>
                   <span v-show="obj.rate < 0"><img src="../../static/img/down.png" width="20"></span>
                 </div>
@@ -267,7 +267,7 @@
 </style>
 <style>
   .van-field__control {
-    font-size: 8px;
+    font-size: 9px;
     word-wrap: break-word;
   }
   .van-hairline--top-bottom::after {
