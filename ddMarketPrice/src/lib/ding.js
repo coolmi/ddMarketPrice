@@ -51,7 +51,8 @@ export function getItcode() {
         onSuccess: function (result) {
           api.getItcodeInfo(result.code, function (res) {
             if (res.data.code) {
-              store.dispatch('updateCode', res.data.data)
+              window.localStorage.clear();
+              window.localStorage.setItem('tokenparams', res.data.data);
               resolve(res.data.data)
             }
           })
@@ -72,11 +73,18 @@ export function ddLogin(path) {
       return
     }
     getRequestAuthCode(path).then(data => {
-      api.getLogin(data, function (res) {
+      // api.getLogin(data, function (res) {
+      //   if (res.data.code) {
+      //     resolve(true)
+      //   } else {
+      //     reject(new FlowError('钉钉免登失败'))
+      //   }
+      // })
+      api.getItcodeInfo(data, function (res) {
         if (res.data.code) {
-          resolve(true)
-        } else {
-          reject(new FlowError('钉钉免登失败'))
+          window.localStorage.clear();
+          window.localStorage.setItem('tokenparams', res.data.data);
+          resolve(res.data.data)
         }
       })
     }).catch((err) => {

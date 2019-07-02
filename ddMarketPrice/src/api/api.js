@@ -9,7 +9,7 @@ export default {
    */
   getJsApiInfos: function (params, cb) {
     let dingtalkCode = ding.parseParam(window.location.href, 'dingtalk_code') || ding.getLocation(AUTH_DINGTALKCODE)
-    axios.get('/breed/api/ddtalk/miandeng/h5config?purl=' + params + '&dingtalk_code=' + dingtalkCode)
+    axios.get('/gmk-marketprice/api/ddtalk/miandeng/h5config?purl=' + params + '&dingtalk_code=' + dingtalkCode)
       .then((res) => {
         cb(res);
       }).catch((error) => {
@@ -74,7 +74,7 @@ export default {
    * @param cb
    */
   getSelectData: function (cb) {
-    axios.get('/gmk-marketprice/mpc/mpcOnlinesales/selectOptions')
+    axios.get('/gmk-marketprice/api/mpc/mpcOnlinesales/selectOptions')
       .then((res) => {
         cb(res)
       }).catch((error) => {
@@ -86,7 +86,19 @@ export default {
    * @param cb
    */
   getReportData: function (beginDate, endDate, weight, platform, merchant, product, cb) {
-    axios.get('/gmk-marketprice/mpc/mpcOnlinesales/list2?beginDate=' + beginDate + '&endDate=' + endDate + '&weight=' + weight + '&platform=' + platform + '&merchant=' + merchant + '&product=' + product)
+    axios.get('/gmk-marketprice/api/mpc/mpcOnlinesales/list2?beginDate=' + beginDate + '&endDate=' + endDate + '&weight=' + weight + '&platform=' + platform + '&merchant=' + merchant + '&product=' + product)
+      .then((res) => {
+        cb(res)
+      }).catch((error) => {
+      return Promise.reject(error)
+    })
+  },
+  /**
+   * 获取热品数据
+   * @param cb
+   */
+  detailShow: function (params, cb) {
+    axios.post('/gmk-marketprice/api/mpc/mpcOnlinesales/detailShow', params)
       .then((res) => {
         cb(res)
       }).catch((error) => {

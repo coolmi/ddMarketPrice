@@ -10,6 +10,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
 axios.defaults.baseURL = baseConfig.baseURL;
 
 axios.interceptors.request.use((config) => {
+  config.headers.common['token'] = window.localStorage.getItem('tokenparams');
   if (!(config.url.indexOf('h5config') >= 0) && !(config.url.indexOf('authorizedInfo') >= 0)) { // dding config 不显示刷新状态框 为啥？ 为了体验
   }
   return config;
