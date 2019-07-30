@@ -9,19 +9,8 @@
         readonly="readonly"
         required
         @click="platformflag = true"/>
-      <van-popup v-model="platformflag" position="bottom" :overlay="true" style="height: 60%">
-        <van-checkbox-group v-model="platformresult">
-          <van-cell-group>
-            <van-cell
-              style="text-align: left"
-              v-for="item in platformList"
-              clickable
-              :key="item.value"
-              :title="item.text">
-              <van-checkbox :name="item.value" style="margin-left: 150px"/>
-            </van-cell>
-          </van-cell-group>
-        </van-checkbox-group>
+      <van-popup v-model="platformflag" position="bottom" :overlay="true">
+        <van-picker show-toolbar title="选择平台" :columns="platformList" @cancel="cancelselect1" @confirm="confirmselect1"/>
       </van-popup>
       <van-field
         v-model="form.merchant"
@@ -31,19 +20,8 @@
         readonly="readonly"
         required
         @click="merchantflag = true"/>
-      <van-popup v-model="merchantflag" position="bottom" :overlay="true" style="height: 60%">
-        <van-checkbox-group v-model="merchantresult">
-          <van-cell-group>
-            <van-cell
-              style="text-align: left"
-              v-for="item in merchantList"
-              clickable
-              :key="item.value"
-              :title="item.text">
-              <van-checkbox :name="item.value" style="margin-left: 150px"/>
-            </van-cell>
-          </van-cell-group>
-        </van-checkbox-group>
+      <van-popup v-model="merchantflag" position="bottom" :overlay="true">
+        <van-picker show-toolbar title="选择商家" :columns="merchantList" @cancel="cancelselect2" @confirm="confirmselect2"/>
       </van-popup>
       <van-field
         v-model="form.timeDate"
@@ -122,12 +100,12 @@
           merchant: '凤祥',
           timeDate: eetime
         },
+        platformvalue: '001',
+        merchantvalue: '001',
         time1: today,
         platformflag: false,
         merchantflag: false,
         beginDateflag: false,
-        platformresult: ['001'],
-        merchantresult: ['001'],
         platformList: [],
         merchantList: [],
         showList: [],
@@ -186,10 +164,11 @@
       },
       getDatainfo () {
         let params = {
-          platform: this.platformresult.toString(),
-          merchant: this.merchantresult.toString(),
+          platform: this.platformvalue,
+          merchant: this.merchantvalue,
           salesDate: this.form.timeDate
         }
+        console.log(params, 'params');
         let _that = this
         api.detailShow(params, function (res) {
           console.log(res);
@@ -220,6 +199,32 @@
           return `${value}月`
         }
         return value;
+      },
+      cancelselect1 () {
+        this.platformflag = false
+      },
+      confirmselect1 (picker, value, index) {
+        let _that = this
+        _that.platformList.forEach(function (item) {
+          if (item.text === picker.text) {
+            _that.platformvalue = item.value
+          }
+        })
+        _that.form.platform = picker.text
+        _that.platformflag = false
+      },
+      cancelselect2 () {
+        this.merchantflag = false
+      },
+      confirmselect2 (picker, value, index) {
+        let _that = this
+        _that.merchantList.forEach(function (item) {
+          if (item.text === picker.text) {
+            _that.merchantvalue = item.value
+          }
+        })
+        _that.form.merchant = picker.text
+        _that.merchantflag = false
       }
     }
   }
